@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import User from '../components/User.vue'
+import ShioriList from '../components/ShioriList.vue'
+
+// onMounted(async () => {
+//   console.log('MOUNTED')
+// })
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <User/>
+    <ShioriList />
   </main>
 </template>
