@@ -1,3 +1,10 @@
+import axios from 'axios';
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
+axios.defaults.withCredentials = true
+
+/**
+ * NOTE: decided to use axios, since 'fetch' doesn't support useful redirect handling when Oauth.
+ */
 export default class ApiClient {
   constructor({
     baseUrl,
@@ -8,47 +15,50 @@ export default class ApiClient {
   async get(path, header, queryParams) {
     const query = new URLSearchParams(queryParams)
     const url = `${this.baseUrl}${path}?${query}`
+    console.log('GET url:', url)
     let headers = {}
     if (header) headers = Object.assign(headers, header)
 
-    return fetch(url, {
-      method: 'GET',
-      headers,
-    })
+    return axios.get(url, { headers })
     .then((res) => {
-      return res.json()
+      console.log("DEBUG GET then", res)
+      return res.data
     })
-    .catch((err) => { console.error(err) })
+    .catch((err) => {
+      console.log("DEBUG GET catch", err)
+      console.error(err)
+    })
   }
 
   async post(path, header, requestBody) {
     const url = `${this.baseUrl}${path}`
-    let headers = { 'Content-Type': 'application/json' }
+    let headers = {
+      'Content-Type': 'application/json',
+    }
     if (header) headers = Object.assign(headers, header)
+      console.log('POST url:', url)
 
-    return fetch(url, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(requestBody),
-    })
+    return axios.post(url, JSON.stringify(requestBody), { headers })
     .then((res) => {
-      return res.json()
+      console.log("DEBUG POST then", res)
+      return res.data
     })
-    .catch((err) => { console.error(err) })
+    .catch((err) => {
+      console.log("DEBUG POST catch", err)
+      console.error(err)
+    })
   }
 
   async put(path, header, requestBody) {
     const url = `${this.baseUrl}${path}`
-    let headers = { 'Content-Type': 'application/json' }
+    let headers = {
+      'Content-Type': 'application/json',
+    }
     if (header) headers = Object.assign(headers, header)
 
-    return fetch(url, {
-      method: 'PUT',
-      headers,
-      body: JSON.stringify(requestBody),
-    })
+    return axios.put(url, JSON.stringify(requestBody), { headers })
     .then((res) => {
-      return res.json()
+      return res.data
     })
     .catch((err) => { console.error(err) })
   }
@@ -59,12 +69,9 @@ export default class ApiClient {
     let headers = {}
     if (header) headers = Object.assign(headers, header)
 
-    return fetch(url, {
-      method: 'DELETE',
-      headers,
-    })
+    return axios.delete(url, { headers })
     .then((res) => {
-      return res.json()
+      return res.data
     })
     .catch((err) => { console.error(err) })
   }

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
+
 import BffClient from '../client/BffClient.js'
 const bffClient = new BffClient()
 
@@ -23,5 +25,8 @@ async function onClickCreateUser() {
     <div v-else>
       <div @click="onClickCreateUser">Create a user</div>
     </div>
+    <br/>
+    <div><a href="http://localhost:8080/v1/auth">auth</a></div>
+    <div><a href="http://localhost:8080/v1/auth/check">auth check</a></div>
   </div>
 </template>
