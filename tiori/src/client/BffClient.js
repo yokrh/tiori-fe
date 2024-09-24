@@ -13,7 +13,8 @@ export default class BffClient extends ApiClient {
 
   async createCustomer(requestBody) {
     const path = '/v1/customer'
-    const res = await this.post(path, null, requestBody)
+    const header = {}
+    const res = await this.post(path, header, requestBody)
     return res.body
   }
 
