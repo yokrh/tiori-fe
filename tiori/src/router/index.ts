@@ -11,7 +11,7 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/shiori',
+      path: '/shiori/:id',
       name: 'shiori',
       component: ShioriView
     },

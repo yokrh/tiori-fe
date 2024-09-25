@@ -3,10 +3,9 @@ import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore('user', () => {
   const user = ref()
-  function setUser(userValue) {
-    user.value = userValue
-    console.log('user', userValue)
+  function printUser() {
+    console.log('user', user.value)
   }
 
-  return { user, setUser }
+  return { user, printUser }
 })

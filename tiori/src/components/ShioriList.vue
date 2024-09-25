@@ -6,30 +6,47 @@ const bffClient = new BffClient()
 
 import { useUserStore } from '@/stores/user'
 const userStore = useUserStore()
-// const props = defineProps({
-//   user: { type: Object, default: null },
-// })
 
 const shioriList = ref([])
 
 onMounted(async () => {
-  if (!userStore.user) return
-
-  bffClient.getShioriList(userStore.user.uid).then((res) => shioriList.value = res.shioriList)
+  await reloadShioriList()
 })
 
 watch(userStore, async() => {
-  bffClient.getShioriList(userStore.user.uid).then((res) => shioriList.value = res.shioriList)
+  await reloadShioriList()
 })
 
+async function reloadShioriList() {
+  if (!userStore.user) {
+    shioriList.value = []
+    return
+  }
+
+  const res = await bffClient.getShioriList(userStore.user.uid)
+  shioriList.value = res.shioriList
+}
+
+async function onClickCreateShiori() {
+  const request = { title: 'Honeymoon :)' } // dev
+  await bffClient.createShiori(userStore.user.uid, request)
+  await reloadShioriList()
+}
 </script>
 
 <template>
   <div>
     <div>ShioriList</div>
+
     <div v-if="userStore.user">{{ userStore.user.name }}のしおり ({{ shioriList.length }})</div>
+
     <div v-if="shioriList && shioriList.length > 0" v-for="s in shioriList" :key="s.id">
-      <div>{{ s.title }}</div>
+      <RouterLink :to="`/shiori/${s.id}`">
+        <div>{{ s.title }}</div>
+      </RouterLink>
     </div>
+
+    <div v-if="userStore.user" @click="onClickCreateShiori">Create a shiori</div>
+    <div v-else>Unknown user</div>
   </div>
 </template>
