@@ -11,18 +11,17 @@ const userStore = useUserStore()
 import { useCookies } from "vue3-cookies"
 const { cookies } = useCookies()
 
+const bffBaseUrl = import.meta.env.VITE_BFF_BASE_URL
+
 onMounted(() => {
-  if (cookies.get('JSESSIONID')) {
-    login()
-  }
+  if (cookies.get('JSESSIONID')) login()
 })
 
 async function login() {
   const request = { name: 'Oka Derick' } // dev
 
-  const user = await bffClient.createCustomer(request)
-  userStore.user = user
-  console.log(`uid: ${user.uid}, name: ${user.name}`)
+  userStore.user = await bffClient.createCustomer(request)
+  console.log(`uid: ${userStore.user.uid}, name: ${userStore.user.name}`)
 }
 </script>
 
@@ -35,7 +34,7 @@ async function login() {
     </div>
 
     <div v-else>
-      <a href="http://localhost:8080/v1/auth">Google Auth</a>
+      <a :href="`${bffBaseUrl}/v1/auth`">Google Auth</a>
     </div>
   </div>
 </template>
