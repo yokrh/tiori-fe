@@ -1,9 +1,4 @@
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
-
-import BffClient from '../client/BffClient.js'
-const bffClient = new BffClient()
-
 import { useUserStore } from '@/stores/user'
 const userStore = useUserStore()
 // const isLogin = defineModel({ type: Boolean, default: false })
@@ -12,17 +7,6 @@ import { useCookies } from "vue3-cookies"
 const { cookies } = useCookies()
 
 const bffBaseUrl = import.meta.env.VITE_BFF_BASE_URL
-
-onMounted(() => {
-  if (cookies.get('JSESSIONID')) login()
-})
-
-async function login() {
-  const request = { name: 'Oka Derick' } // dev
-
-  userStore.user = await bffClient.createCustomer(request)
-  console.log(`uid: ${userStore.user.uid}, name: ${userStore.user.name}`)
-}
 </script>
 
 <template>

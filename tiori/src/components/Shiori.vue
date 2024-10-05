@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 
 import BffClient from '../client/BffClient.js'
 const bffClient = new BffClient()
@@ -19,14 +19,20 @@ const props = defineProps({
 const shiori = ref()
 
 onMounted(async () => {
-  console.log(userStore.user)
-  console.log(props.shioriId)
-  if (!userStore.user) return
-  if (!props.shioriId) return
+  await reloadShiori()
+})
+
+watch(userStore, async() => {
   await reloadShiori()
 })
 
 async function reloadShiori() {
+  console.log(userStore.user)
+  console.log(props.shioriId)
+
+  if (!userStore.user) return
+  if (!props.shioriId) return
+
   const res = await bffClient.getShiori(userStore.user.uid, props.shioriId)
   shiori.value = new Shiori(res.shiori)
   console.log(shiori.value)

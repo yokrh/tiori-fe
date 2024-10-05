@@ -11,7 +11,21 @@ const { cookies } = useCookies()
 import { useUserStore } from '@/stores/user'
 const userStore = useUserStore()
 
+import BffClient from './client/BffClient'
+const bffClient = new BffClient()
+
 const isLogin = computed(() => cookies.get('JSESSIONID') != null)
+
+onMounted(async () => {
+  if (cookies.get('JSESSIONID')) await login()
+})
+
+async function login() {
+  const request = { name: 'Oka Derick' } // dev
+
+  userStore.user = await bffClient.createCustomer(request)
+  console.log(`uid: ${userStore.user.uid}, name: ${userStore.user.name}`)
+}
 
 watch(() => route.query.logout, () => {
   if (route.query.logout && cookies.get('JSESSIONID')) {
