@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="js">
 import User from '../components/User.vue'
 import ShioriList from '../components/ShioriList.vue'
 </script>

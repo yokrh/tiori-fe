@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="js">
 import { ref, onMounted, watch } from 'vue'
 
 import BffClient from '../client/BffClient.js'

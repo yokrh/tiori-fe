@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="js">
 import Shiori from '../components/Shiori.vue'
 
 import { ref, onMounted } from 'vue'

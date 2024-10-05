@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="js">
 import { onMounted, computed, watch } from 'vue'
 
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'

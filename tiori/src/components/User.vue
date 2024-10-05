@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="js">
 import { useUserStore } from '@/stores/user'
 const userStore = useUserStore()
 // const isLogin = defineModel({ type: Boolean, default: false })

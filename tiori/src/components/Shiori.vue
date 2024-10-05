@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="js">
 import { ref, onMounted, watch } from 'vue'
 
 import BffClient from '../client/BffClient.js'
@@ -107,8 +107,8 @@ async function onClickAddBlock(pageId, pageLayoutIndex) {
           <div>Block Type: {{ b.type }}</div>
           <div>Block Content: {{ b.content }}</div>
         </div>
+        <br/><br/>
       </div>
-      <br/>
 
       <div @click="onClickAddPage">add page</div>
     </div>
