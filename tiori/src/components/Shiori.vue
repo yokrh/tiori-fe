@@ -1,8 +1,11 @@
 <script setup lang="js">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 
 import BffClient from '../client/BffClient.js'
 const bffClient = new BffClient()
+
+import BaseImage from './shiori/BaseImage.vue'
+import BaseText from './shiori/BaseText.vue'
 
 import { useUserStore } from '@/stores/user'
 import Shiori from '@/model/Shiori.js'
@@ -17,6 +20,9 @@ const props = defineProps({
 })
 
 const shiori = ref()
+const isEditorMode = ref(false)
+const baseImageModel = ref({ src: 'https://pbs.twimg.com/profile_images/1786403614988337152/YSZfAX0q_400x400.jpg' })
+const baseTextModel = ref({ text: 'あいうえお　旅行' })
 
 onMounted(async () => {
   await reloadShiori()
@@ -82,11 +88,36 @@ async function onClickAddBlock(pageId, pageLayoutIndex) {
 
   await reloadShiori()
 }
+
+function onChangeBaseImage() {
+  console.log('onChangeBaseImage', baseImageModel.value)
+}
+function onChangeBaseText() {
+  console.log('onChangeBaseText', baseTextModel.value)
+}
 </script>
 
 <template>
-  <div>
+  <div :class="{ 'is-viewer-mode': !isEditorMode }">
     <div>Shiori</div>
+
+    <div>
+      <el-switch
+        v-model="isEditorMode"
+        style="--el-switch-on-color: #8ccdc0; --el-switch-off-color: #d0dddf"
+        inline-prompt
+        active-text="編集モード"
+        inactive-text=""
+      />
+    </div>
+
+    <div>
+      <div>Components</div>
+      <div>
+        <BaseImage v-model="baseImageModel" @change="onChangeBaseImage" />
+        <BaseText v-model="baseTextModel" @change="onChangeBaseText" />
+      </div>
+    </div>
 
     <div v-if="shiori">
       <div>{{ shiori.title }}</div>
@@ -118,3 +149,9 @@ async function onClickAddBlock(pageId, pageLayoutIndex) {
     </div>
   </div>
 </template>
+
+<style scoped>
+.is-viewer-mode :deep(.settings) {
+  display: none;
+}
+</style>

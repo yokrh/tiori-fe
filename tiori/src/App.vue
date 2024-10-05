@@ -53,6 +53,8 @@ watch(() => route.query.logout, () => {
 </template>
 
 <style scoped>
-@media (min-width: 1024px) {
+nav a {
+  padding: 0 8px 0 0;
 }
+@media (min-width: 1024px) {}
 </style>
