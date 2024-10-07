@@ -4,8 +4,7 @@ import { ref, onMounted, watch, computed } from 'vue'
 import BffClient from '../client/BffClient.js'
 const bffClient = new BffClient()
 
-import BaseImage from './shiori/BaseImage.vue'
-import BaseText from './shiori/BaseText.vue'
+import Spot from './shiori/Spot.vue'
 
 import { useUserStore } from '@/stores/user'
 import Shiori from '@/model/Shiori.js'
@@ -21,8 +20,11 @@ const props = defineProps({
 
 const shiori = ref()
 const isEditorMode = ref(false)
-const baseImageModel = ref({ src: 'https://pbs.twimg.com/profile_images/1786403614988337152/YSZfAX0q_400x400.jpg' })
-const baseTextModel = ref({ text: 'あいうえお　旅行' })
+const spot = ref({
+  title: 'title',
+  image: 'https://pbs.twimg.com/profile_images/1786403614988337152/YSZfAX0q_400x400.jpg',
+  description: 'description',
+})
 
 onMounted(async () => {
   await reloadShiori()
@@ -33,8 +35,8 @@ watch(userStore, async() => {
 })
 
 async function reloadShiori() {
-  console.log(userStore.user)
-  console.log(props.shioriId)
+  console.log(`userStore.user: ${userStore.user}`)
+  console.log(`props.shioriId: ${props.shioriId}`)
 
   if (!userStore.user) return
   if (!props.shioriId) return
@@ -89,11 +91,8 @@ async function onClickAddBlock(pageId, pageLayoutIndex) {
   await reloadShiori()
 }
 
-function onChangeBaseImage() {
-  console.log('onChangeBaseImage', baseImageModel.value)
-}
-function onChangeBaseText() {
-  console.log('onChangeBaseText', baseTextModel.value)
+function onChangeSpot() {
+  console.log('onChangeSpot', spot.value.title)
 }
 </script>
 
@@ -106,16 +105,15 @@ function onChangeBaseText() {
         v-model="isEditorMode"
         style="--el-switch-on-color: #8ccdc0; --el-switch-off-color: #d0dddf"
         inline-prompt
-        active-text="編集モード"
-        inactive-text=""
+        active-text="編集ON"
+        inactive-text="編集OFF"
       />
     </div>
 
     <div>
       <div>Components</div>
       <div>
-        <BaseImage v-model="baseImageModel" @change="onChangeBaseImage" />
-        <BaseText v-model="baseTextModel" @change="onChangeBaseText" />
+        <Spot v-model="spot" @change="onChangeSpot" />
       </div>
     </div>
 

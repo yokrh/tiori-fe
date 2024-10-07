@@ -1,5 +1,5 @@
 <script setup lang="js">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 /**
  * { src: 'string' }
@@ -15,21 +15,38 @@ function onChangeSrcInput() {
 </script>
 
 <template>
-  <div>
+  <div class="base-image">
     <div class="settings">
-      <div style="padding-bottom: 8px;">設定</div>
       <el-input v-model="srcInput" placeholder="画像アドレス" @change="onChangeSrcInput" />
     </div>
-    <div style="width:100%; height:auto;">
+    <div class="content">
       <el-image :src="model.src" :fit="fit" />
     </div>
   </div>
 </template>
 
 <style scoped>
+.base-image {
+  position: relative;
+
+  & :deep(.el-input) {
+    height: 100%;
+    padding: 2%;
+  }
+
+  & :deep(.el-image) {
+    padding: 2%;
+  }
+}
 .settings {
-  margin: 20px 0;
-  padding: 8px 4%;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
   background-color: #eee;
+}
+.content {
+  width: 100%;
+  height: auto;
 }
 </style>
