@@ -53,6 +53,9 @@ watch(() => route.query.logout, () => {
 </template>
 
 <style scoped>
+header {
+  padding: 12px 0;  
+}
 nav a {
   padding: 0 8px 0 0;
 }

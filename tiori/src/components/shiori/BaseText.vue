@@ -20,12 +20,18 @@ function onChangeText() {
 <template>
   <div class="base-text">
     <div class="settings">
-      <el-input type="textarea" :autosize="{ minRows: 2}" v-model="textInput" placeholder="テキスト" @change="onChangeText" />
+      <el-input
+        type="textarea"
+        :autosize="{ minRows: 1}"
+        v-model="textInput"
+        placeholder="テキスト"
+        @change="onChangeText"
+      />
     </div>
     <div class="content">
       <el-input
         v-model="model.text"
-        :autosize="{ minRows: 2}"
+        :autosize="{ minRows: 1}"
         type="textarea"
         readonly
       />

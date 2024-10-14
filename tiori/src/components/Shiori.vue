@@ -5,6 +5,7 @@ import BffClient from '../client/BffClient.js'
 const bffClient = new BffClient()
 
 import Spot from './shiori/Spot.vue'
+import Transport from './shiori/Transport.vue'
 
 import { useUserStore } from '@/stores/user'
 import Shiori from '@/model/Shiori.js'
@@ -18,12 +19,18 @@ const props = defineProps({
   shioriId: { type: String, default: null },
 })
 
-const shiori = ref()
+const shiori = ref({ title: 'しおり' })
 const isEditorMode = ref(false)
 const spot = ref({
-  title: 'title',
+  title: 'タイトル',
   image: 'https://pbs.twimg.com/profile_images/1786403614988337152/YSZfAX0q_400x400.jpg',
-  description: 'description',
+  description: 'あいうえおかきくけこ',
+})
+const transport = ref({
+  leaveAt: '11/23 10:00',
+  arriveAt: '11/23 17:00',
+  moveBy: '列車',
+  description: 'あいうえおかきくけこ',
 })
 
 onMounted(async () => {
@@ -94,31 +101,32 @@ async function onClickAddBlock(pageId, pageLayoutIndex) {
 function onChangeSpot() {
   console.log('onChangeSpot', spot.value.title)
 }
+function onChangeTransport() {
+  console.log('onChangeTransport', transport.value.title)
+}
 </script>
 
 <template>
-  <div :class="{ 'is-viewer-mode': !isEditorMode }">
-    <div>Shiori</div>
-
-    <div>
-      <el-switch
-        v-model="isEditorMode"
-        style="--el-switch-on-color: #8ccdc0; --el-switch-off-color: #d0dddf"
-        inline-prompt
-        active-text="編集ON"
-        inactive-text="編集OFF"
-      />
-    </div>
-
-    <div>
-      <div>Components</div>
-      <div>
-        <Spot v-model="spot" @change="onChangeSpot" />
-      </div>
-    </div>
-
+  <div class="shiori" :class="{ 'is-viewer-mode': !isEditorMode }">
     <div v-if="shiori">
       <div>{{ shiori.title }}</div>
+
+      <div class="settings-switch">
+        <el-switch
+          v-model="isEditorMode"
+          style="--el-switch-on-color: #8ccdc0; --el-switch-off-color: #d0dddf"
+          size="large"
+          inline-prompt
+          active-text="編集ON"
+          inactive-text="編集OFF"
+        />
+      </div>
+
+      <div>
+        <Spot v-model="spot" @change="onChangeSpot" />
+        <Transport v-model="transport" @change="onChangeTransport" />
+        <Spot v-model="spot" @change="onChangeSpot" />
+      </div>
 
       <br/>
       <div v-for="p in shiori.pageList" :key="p.id">
@@ -151,5 +159,14 @@ function onChangeSpot() {
 <style scoped>
 .is-viewer-mode :deep(.settings) {
   display: none;
+}
+
+.shiori {
+  padding: 12px 4%;
+  background-color: #00ced122;
+
+  & .settings-switch {
+    margin-bottom: 32px;
+  }
 }
 </style>

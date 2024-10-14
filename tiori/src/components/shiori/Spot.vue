@@ -41,16 +41,22 @@ function onChangeDescription() {
 <style scoped>
 .spot {
   display: flex;
-  padding: 8px 2%;
+  padding-bottom: 32px;
 }
 .title-and-image {
   width: 40%;
-}
-.title {
-  margin-bottom: 12px;
-}
-.image {
-  width: 100%;
+
+  & .title {
+    margin-bottom: 12px;
+
+    & >>> .el-textarea__inner {
+      text-align: center;
+      font-size: 32px;
+    }
+  }
+  & .image {
+    width: 100%;
+  }
 }
 .description {
   margin-left: 2%;
@@ -58,6 +64,10 @@ function onChangeDescription() {
 
   & >>> .content {
     height: 100%;
+  }
+
+  & >>> .el-textarea__inner {
+    font-size: 24px;
   }
 }
 </style>

@@ -48,5 +48,9 @@ function onChangeSrcInput() {
 .content {
   width: 100%;
   height: auto;
+
+  & >>> .el-image {
+    display: flex;
+  }
 }
 </style>
