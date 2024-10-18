@@ -42,6 +42,13 @@ function onChangeDescription() {
 .spot {
   display: flex;
   padding-bottom: 32px;
+
+  & >>> .content .el-textarea__inner {
+    background-color: none;
+    border: none;
+    box-shadow: none;
+    resize: none;
+  }
 }
 .title-and-image {
   width: 40%;

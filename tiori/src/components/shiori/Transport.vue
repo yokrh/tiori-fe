@@ -48,6 +48,13 @@ function onChangeDescription() {
 .transport {
   display: flex;
   padding-bottom: 32px;
+
+  & >>> .content .el-textarea__inner {
+    background-color: none;
+    border: none;
+    box-shadow: none;
+    resize: none;
+  }
 }
 .time-and-move {
   width: 30%;
@@ -74,10 +81,6 @@ function onChangeDescription() {
     margin-left: 5%;
     padding: 16px 0 32px 8px;
     border-left: 2px solid #333;
-
-    & >>> .el-textarea__inner {
-      font-size: 16px;
-    }
 
     & >>> .settings {
       height: auto;
