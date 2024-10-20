@@ -4,8 +4,14 @@ import ShioriList from '../components/ShioriList.vue'
 </script>
 
 <template>
-  <main>
-    <User/>
-    <ShioriList />
+  <main class="home">
+    <User class="user"/>
+    <ShioriList class="shiori-list"/>
   </main>
 </template>
+
+<style scoped>
+.user {
+  margin-bottom: 20px;
+}
+</style>

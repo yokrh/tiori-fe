@@ -15,10 +15,10 @@ export default class ApiClient {
   async get(path, header, queryParams) {
     const query = new URLSearchParams(queryParams)
     const url = `${this.baseUrl}${path}?${query}`
-    console.log('GET url:', url)
     let headers = {}
     if (header) headers = Object.assign(headers, header)
 
+    console.log('GET url:', url)
     return axios.get(url, { headers })
     .then((res) => {
       console.log("DEBUG GET then", res)
@@ -36,8 +36,8 @@ export default class ApiClient {
       'Content-Type': 'application/json',
     }
     if (header) headers = Object.assign(headers, header)
-      console.log('POST url:', url)
-
+      
+    console.log('POST url:', url, requestBody)
     return axios.post(url, JSON.stringify(requestBody), { headers })
     .then((res) => {
       console.log("DEBUG POST then", res)
@@ -56,6 +56,7 @@ export default class ApiClient {
     }
     if (header) headers = Object.assign(headers, header)
 
+    console.log('PUT url:', url, requestBody)
     return axios.put(url, JSON.stringify(requestBody), { headers })
     .then((res) => {
       return res.data
@@ -69,6 +70,7 @@ export default class ApiClient {
     let headers = {}
     if (header) headers = Object.assign(headers, header)
 
+    console.log('DELETE url:', url)
     return axios.delete(url, { headers })
     .then((res) => {
       return res.data

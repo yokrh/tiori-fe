@@ -43,7 +43,7 @@ function onChangeDescription() {
   display: flex;
   padding-bottom: 32px;
 
-  & >>> .content .el-textarea__inner {
+  & :deep(.content) .el-textarea__inner {
     background-color: none;
     border: none;
     box-shadow: none;
@@ -56,7 +56,7 @@ function onChangeDescription() {
   & .title {
     margin-bottom: 12px;
 
-    & >>> .el-textarea__inner {
+    & :deep(.el-textarea__inner) {
       text-align: center;
       font-size: 32px;
     }
@@ -69,11 +69,11 @@ function onChangeDescription() {
   margin-left: 2%;
   width: 58%;
 
-  & >>> .content {
+  & :deep(.content) {
     height: 100%;
   }
 
-  & >>> .el-textarea__inner {
+  & :deep(.el-textarea__inner) {
     font-size: 24px;
   }
 }

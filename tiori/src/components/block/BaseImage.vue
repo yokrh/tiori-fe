@@ -1,5 +1,5 @@
 <script setup lang="js">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 
 /**
  * { src: 'string' }
@@ -49,7 +49,7 @@ function onChangeSrcInput() {
   width: 100%;
   height: auto;
 
-  & >>> .el-image {
+  & :deep(.el-image) {
     display: flex;
   }
 }

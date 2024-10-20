@@ -58,7 +58,7 @@ async function onClickAddPage() {
           blockIdList: [],
         }),
       ],
-    }), // dev
+    })
   }
   await bffClient.createPage(userStore.user.uid, req)
 
@@ -81,9 +81,9 @@ async function onClickAddBlock(pageId, pageLayoutIndex, blockType) {
       new PageLayout({
         type: pageLayoutType,
         blockIdList: [
-          ...page.layout.list[pageLayoutIndex].blockIdList.slice(0, pageLayoutIndex),
+          ...page.layout.list[pageLayoutIndex].blockIdList.slice(pageLayoutIndex),
           res.blockId,
-          ...page.layout.list[pageLayoutIndex].blockIdList.slice(pageLayoutIndex)
+          ...page.layout.list[pageLayoutIndex].blockIdList.slice(0, pageLayoutIndex),
         ],
       }),
     ],
@@ -98,12 +98,12 @@ async function onClickAddBlock(pageId, pageLayoutIndex, blockType) {
 <template>
   <div class="shiori" :class="{ 'is-viewer-mode': !isEditorMode }">
     <div v-if="userStore.user && shiori">
-      <div>{{ shiori.title }}</div>
+      <div class="title">{{ shiori.title }}</div>
 
       <div class="settings-switch">
         <el-switch
           v-model="isEditorMode"
-          style="--el-switch-on-color: #8ccdc0; --el-switch-off-color: #d0dddf"
+          style="--el-switch-on-color: #7cbdb0; --el-switch-off-color: #d0dddf;"
           size="large"
           inline-prompt
           active-text="編集ON"
@@ -111,13 +111,9 @@ async function onClickAddBlock(pageId, pageLayoutIndex, blockType) {
         />
       </div>
 
-      <div v-for="p in shiori.pageList" :key="p.id">
-        <div>Page Layout: {{ p.layout }}</div>
-
-        <div v-for="(pl, index) in p.layout.list" :key="index">
-          <div>PageLayout Type: {{ pl.type }}</div>
-          <div>PageLayout blockIdList: {{ pl.blockIdList }}</div>
-          <div v-for="bid in pl.blockIdList" :key="bid">
+      <div class="page" v-for="p in shiori.pageList" :key="p.id">
+        <div class="block-list" v-for="(pl, index) in p.layout.list" :key="index">
+          <div class="block-container" v-for="bid in pl.blockIdList" :key="bid">
             <Block
               v-if="p.blockList.filter(b => b.id === bid).length > 0"
               v-model="p.blockList.filter(b => b.id === bid)[0]"
@@ -125,25 +121,41 @@ async function onClickAddBlock(pageId, pageLayoutIndex, blockType) {
             />
           </div>
 
-          <div @click="isAddBlockDialogEnabled = true">add block</div>
+          <el-button
+            class="create-block" 
+            type="primary"
+            @click="isAddBlockDialogEnabled = true">
+            情報を追加する
+          </el-button>
+
           <el-dialog v-model="isAddBlockDialogEnabled" title="どれを追加しますか？">
-            <div @click="onClickAddBlock(p.id, index, BlockType.SPOT)">スポットを追加</div>
-            <div @click="onClickAddBlock(p.id, index, BlockType.MOVE)">移動を追加</div>
+            <el-button
+              class="block-select-button"
+              type="success" plain
+              @click="onClickAddBlock(p.id, index, BlockType.SPOT)">
+              スポットを追加
+            </el-button>
+            <el-button
+              class="block-select-button"
+              type="warning" plain
+              @click="onClickAddBlock(p.id, index, BlockType.MOVE)">
+              移動を追加
+            </el-button>
           </el-dialog>
         </div>
-
-        <div>DEBUG</div>
-        <br/>
-        <div v-for="b in p.blockList" :key="b.id">
-          <div>Block Id: {{ b.id }}</div>
-          <div>Block Type: {{ b.type }}</div>
-          <div>Block Content: {{ b.content }}</div>
-        </div>
-        <br/><br/>
-        <div>DEBUG</div>
       </div>
 
-      <div @click="onClickAddPage">add page</div>
+      <el-button
+        class="create-page" 
+        type="primary" plain
+        @click="onClickAddPage">
+        ページを追加する
+      </el-button>
+
+      <div v-for="p in shiori.pageList" :key="p.id" style="background: #ddd; padding: 12px 24px; margin: 12px;">
+        <div>DEBUG</div>
+        <div>Page: {{ p }}</div>
+      </div>
     </div>
 
     <div v-else>
@@ -159,10 +171,34 @@ async function onClickAddBlock(pageId, pageLayoutIndex, blockType) {
 
 .shiori {
   padding: 12px 4%;
-  background-color: #00ced122;
+
+  & .title {
+    font-size: 32px;
+  }
 
   & .settings-switch {
     margin-bottom: 32px;
+
+    & :deep(.el-switch__core) {
+      padding: 4px;
+    }
+
+    & :deep(.el-switch__inner) .is-text {
+      font-weight: bold;
+    }
+  }
+
+  & .block-select-button {
+    margin-left: 0 !important;
+    display: block;
+
+    & + .block-select-button {
+      margin-top: 8px !important;
+    }
+  }
+
+  & .create-page {
+    margin: 32px 0;
   }
 }
 </style>

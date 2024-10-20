@@ -8,6 +8,7 @@ import { useUserStore } from '@/stores/user'
 const userStore = useUserStore()
 
 const shioriList = ref([])
+const newShioriTitle = ref()
 
 onMounted(async () => {
   await reloadShioriList()
@@ -28,25 +29,51 @@ async function reloadShioriList() {
 }
 
 async function onClickCreateShiori() {
-  const request = { title: 'Honeymoon :)' } // dev
+  const request = { title: newShioriTitle.value }
   await bffClient.createShiori(userStore.user.uid, request)
   await reloadShioriList()
 }
 </script>
 
 <template>
-  <div>
-    <div>ShioriList</div>
-
-    <div v-if="userStore.user">{{ userStore.user.name }}のしおり ({{ shioriList.length }})</div>
-
-    <div v-if="shioriList && shioriList.length > 0" v-for="s in shioriList" :key="s.id">
-      <RouterLink :to="`/shiori/${s.id}`">
-        <div>{{ s.title }}</div>
-      </RouterLink>
-    </div>
-
-    <div v-if="userStore.user" @click="onClickCreateShiori">Create a shiori</div>
-    <div v-else>Unknown user</div>
+  <div class="shiori-list">
+    <el-card v-if="userStore.user">
+      <div class="list-container">
+        <template v-if="shioriList && shioriList.length > 0">
+          <RouterLink v-for="s in shioriList" :key="s.id" :to="`/shiori/${s.id}`">
+            <el-card shadow="hover">{{ s.title }}</el-card>
+          </RouterLink>
+        </template>
+        <div v-else>しおりはありません</div>
+      </div>
+  
+      <el-input class="new-shiori-title" v-model="newShioriTitle" placeholder="新しいしおりのタイトル" />
+      <el-button
+        class="create-shiori" 
+        type="primary"
+        @click="onClickCreateShiori">
+        しおりを作成する
+      </el-button>
+    </el-card>
   </div>
 </template>
+
+<style scoped>
+.shiori-list {
+  min-height: 120px;
+
+  & .list-container {
+    margin-bottom: 40px;
+  }
+
+  & .new-shiori-title {
+    margin-bottom: 8px;
+    max-width: 50%;
+    display: flex;
+  }
+
+  & .create-shiori {
+    margin-bottom: 20px;
+  }
+}
+</style>

@@ -1,5 +1,5 @@
 <script setup lang="js">
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 
 import BffClient from '../client/BffClient.js'
 const bffClient = new BffClient()
@@ -51,7 +51,4 @@ async function onChangeBlock() {
 </template>
 
 <style scoped>
-.block {
-  background-color: #eee;
-}
 </style>

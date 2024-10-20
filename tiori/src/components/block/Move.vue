@@ -49,7 +49,7 @@ function onChangeDescription() {
   display: flex;
   padding-bottom: 32px;
 
-  & >>> .content .el-textarea__inner {
+  & :deep(.conten) .el-textarea__inner {
     background-color: none;
     border: none;
     box-shadow: none;
@@ -63,14 +63,14 @@ function onChangeDescription() {
 
   & .leave-at {
     order: 1;
-    & >>> .el-textarea__inner {
+    & :deep(.el-textarea__inner) {
       font-size: 16px;
     }
   }
 
   & .arrive-at {
     order: 3;
-    & >>> .el-textarea__inner {
+    & :deep(.el-textarea__inner) {
       font-size: 16px;
     }
   }
@@ -82,7 +82,7 @@ function onChangeDescription() {
     padding: 16px 0 32px 8px;
     border-left: 2px solid #333;
 
-    & >>> .settings {
+    & :deep(.settings) {
       height: auto;
     }
   }
@@ -91,11 +91,11 @@ function onChangeDescription() {
   margin-left: 2%;
   width: 68%;
 
-  & >>> .content {
+  & :deep(.content) {
     height: 100%;
   }
 
-  & >>> .el-textarea__inner {
+  & :deep(.el-textarea__inner) {
     font-size: 24px;
   }
 }
