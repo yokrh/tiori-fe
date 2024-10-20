@@ -14,7 +14,7 @@ const moveByInput = ref({ text: model.value.moveBy })
 const descriptionInput = ref({ text: model.value.description })
 
 onMounted(() => {
-  console.log('Transport', model.value)
+  console.log('Move', model.value)
 })
 
 function onChangeLeaveAt() {
@@ -32,7 +32,7 @@ function onChangeDescription() {
 </script>
 
 <template>
-  <div class="transport">
+  <div class="move">
     <div class="time-and-move">
       <BaseText v-model="leaveAtInput" @change="onChangeLeaveAt" class="leave-at" />
       <BaseText v-model="arriveAtInput" @change="onChangeArriveAt" class="arrive-at" />
@@ -45,7 +45,7 @@ function onChangeDescription() {
 </template>
 
 <style scoped>
-.transport {
+.move {
   display: flex;
   padding-bottom: 32px;
 
