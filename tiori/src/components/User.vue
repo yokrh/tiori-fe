@@ -24,23 +24,42 @@ function onChangeUserNameInput() {
     </div>
 
     <div v-else>
-      <el-input
-        class="user-name-input"
-        v-model="userNameInput"
-        @change="onChangeUserNameInput"
-        placeholder="新規の場合は、登録したいユーザー名を入力してください"
-      />
-      <a
-        style="padding: 8px 16px; border: 2px solid hsla(150, 100%, 40%, 1); border-radius: 6px;"
-        :href="`${bffBaseUrl}/v1/auth`">
-        Googleでログイン <span v-show="userNameInput">（新規の場合 ユーザ名：{{userNameInput}} で登録されます）</span>
-      </a>
+      <div>
+        <div class="login-header">ログイン</div>
+        <a
+          style="padding: 8px 16px; border: 2px solid hsla(150, 100%, 40%, 1); border-radius: 6px;"
+          :href="`${bffBaseUrl}/v1/auth`">
+          Googleでログイン
+        </a>
+      </div>
+      <div>
+        <div class="registration-header">新規登録</div>
+        <el-input
+          class="user-name-input"
+          v-model="userNameInput"
+          @change="onChangeUserNameInput"
+          placeholder="登録したいユーザー名を入力してください"
+        />
+        <a
+          style="padding: 8px 16px; border: 2px solid hsla(150, 100%, 40%, 1); border-radius: 6px;"
+          :href="`${bffBaseUrl}/v1/auth`">
+          Google連携 <span v-show="userNameInput">（ユーザ名：{{userNameInput}} で登録されます）</span>
+        </a>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
 .user {
+  & .login-header {
+    margin-bottom: 12px;
+  }
+
+  & .registration-header {
+    margin: 40px 0 12px 0;
+  }
+
   & .user-name-input {
     margin-bottom: 16px;
     max-width: 50%;

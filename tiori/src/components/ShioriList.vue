@@ -40,6 +40,7 @@ async function onClickCreateShiori() {
     <el-card v-if="userStore.user">
       <div class="list-container">
         <template v-if="shioriList && shioriList.length > 0">
+          <div class="header">しおり一覧</div>
           <RouterLink v-for="s in shioriList" :key="s.id" :to="`/shiori/${s.id}`">
             <el-card shadow="hover">{{ s.title }}</el-card>
           </RouterLink>
@@ -47,7 +48,7 @@ async function onClickCreateShiori() {
         <div v-else>しおりはありません</div>
       </div>
   
-      <el-input class="new-shiori-title" v-model="newShioriTitle" placeholder="新しいしおりのタイトル" />
+      <el-input class="new-shiori-title" v-model="newShioriTitle" placeholder="新規しおりのタイトル" />
       <el-button
         class="create-shiori" 
         type="primary"
@@ -64,6 +65,10 @@ async function onClickCreateShiori() {
 
   & .list-container {
     margin-bottom: 40px;
+
+    & .header {
+      margin-bottom: 8px;
+    }
   }
 
   & .new-shiori-title {
